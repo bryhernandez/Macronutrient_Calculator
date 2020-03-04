@@ -77,6 +77,10 @@ int main() {
   if(m_or_f == 'F')
     bmr = (int)calc_female_bmr(kg, cm, age);
 
+  int cutOrBulk;
+  cout << "Stay the same, Cut, or Bulk (0, 1 or 2): ";
+  cin >> cutOrBulk;
+
   cout << endl << "Your BMR is " << bmr << endl;
 
   int activity;
@@ -89,7 +93,13 @@ int main() {
 
   cin >> activity;
 
-  int cals_burned = calc_cals(activity , bmr);
+  int cals_burned;
+  if(cutOrBulk == 1)
+    cals_burned = calc_cals(activity , bmr) - 500;
+  else if(cutOrBulk == 2)
+    cals_burned = calc_cals(activity , bmr) + 500;
+  else if(cutOrBulk == 0)
+    cals_burned = calc_cals(activity , bmr);
 
   cout << endl << "You burn a total of " << cals_burned << " calories a day." << endl;
 
@@ -117,5 +127,5 @@ int main() {
   int carbs = (cals_burned) - ((protein*4) + calc_fat_cals(fat, cals_burned));
   carbs = carbs/4;
 
-  cout << "Your total carbs intake should be " << carbs << " g" << endl;
+  cout << "Your total carbs intake should be " << carbs << " g" << endl;  
 }
