@@ -111,7 +111,7 @@ int main() {
   double protein;
   cin >> protein;
 
-  cout << "Next we calculate fat. " << endl 
+  cout << endl << "Next we calculate fat. " << endl 
   << "Fat should be set between 20% and 30% of " 
   << endl << "your total calories." << endl << endl << 
   "What would you like it to be? ";
