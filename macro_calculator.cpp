@@ -77,31 +77,54 @@ int main() {
   if(m_or_f == 'F')
     bmr = (int)calc_female_bmr(kg, cm, age);
 
-  int cutOrBulk;
-  cout << "Stay the same, Cut, or Bulk (0, 1 or 2): ";
-  cin >> cutOrBulk;
+  // int cutOrBulk;
+  // cout << "Stay the same(0), Cut(1), or Bulk(2): ";
+  // cin >> cutOrBulk;
 
-  cout << endl << "Your BMR is " << bmr << endl;
+  // cout << endl << "Your BMR is " << bmr << endl;
 
   int activity;
-  cout << endl << "What would you say that your activity level is? (1, 2, 3, 4, 5)" << endl;
+  cout << endl << "What would you say that your activity level is?" << endl;
   cout << "1. Sedentary (little to no exercise)" << endl
   << "2. Lightly Active (light exercise/sports 1-3 days/week)" << endl
   << "3. Moderately Active (moderate exercise/sports 3-5 days/week)" << endl 
   << "4. Very Active (hard exercise/sports 6-7 days/week)" << endl
-  << "5. Extremely Active (very hard exercise /sports AND physical job)" << endl;
+  << "5. Extremely Active (very hard exercise /sports AND physical job)" << endl 
+  << "(1, 2, 3, 4, or 5): ";
 
   cin >> activity;
 
-  int cals_burned;
-  if(cutOrBulk == 1)
-    cals_burned = calc_cals(activity , bmr) - 500;
-  else if(cutOrBulk == 2)
-    cals_burned = calc_cals(activity , bmr) + 500;
-  else if(cutOrBulk == 0)
-    cals_burned = calc_cals(activity , bmr);
+  int maintanance_cals = calc_cals(activity, bmr);
+  // if(cutOrBulk == 1)
+  //   cals_burned = calc_cals(activity , bmr) - 500;
+  // else if(cutOrBulk == 2)
+  //   cals_burned = calc_cals(activity , bmr) + 500;
+  // else if(cutOrBulk == 0)
+  //   cals_burned = calc_cals(activity , bmr);
 
-  cout << endl << "You burn a total of " << cals_burned << " calories a day." << endl;
+  cout << endl << "You maintanance calories is " << maintanance_cals << endl << endl;
+
+  char yesOrNo;
+  cout << "Would you like to add or subtract to maintanance calories? (Y/N): ";
+  cin >> yesOrNo;
+
+  int cal_change = 0;
+  if(yesOrNo == 'Y'){
+    // cout << "How much? (+/-): ";
+    cout << "Add or Subtract: ";
+    string addOrSubtract;
+    cin >> addOrSubtract;
+    if(addOrSubtract == "add"){
+      cout << "How much? ";
+      cin >> cal_change;
+    }
+    if(addOrSubtract == "subtract"){
+      cout << "How much? ";
+      cin >> cal_change;
+      cal_change = -cal_change;
+    }
+  }
+  maintanance_cals += cal_change;
 
   cout << endl << "Now lets figure out your macros!" << endl << endl
   << "Usually protein should be set between " << endl << "0.8 and 1.2 grams per pound of body weight."
@@ -120,12 +143,13 @@ int main() {
   cin >> fat;
 
   protein = protein*lbs;
-  cout << endl << "Your total protein intake should be " << protein << " g" << endl;
+  cout << endl << "Protein: " << protein << "g" << endl;
 
-  cout << "Your total fat intake should be " << calc_fat(fat, cals_burned) << " g" << endl;
+  cout << "Fat: " << calc_fat(fat, maintanance_cals) << "g" << endl;
 
-  int carbs = (cals_burned) - ((protein*4) + calc_fat_cals(fat, cals_burned));
+  int carbs = (maintanance_cals) - ((protein*4) + calc_fat_cals(fat, maintanance_cals));
   carbs = carbs/4;
 
-  cout << "Your total carbs intake should be " << carbs << " g" << endl;  
+  cout << "Carbs: " << carbs << "g" << endl;
+  
 }
