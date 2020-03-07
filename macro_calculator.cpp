@@ -19,6 +19,13 @@ double calc_female_bmr(double kg, double cm, double age){
   return bmr;
 }
 
+double mccardle_formula(double kg, int bf){
+  int lbm = 100 * (100 - bf) / 100;
+  double bmr = 370 + (21.6 * lbm);
+
+  return bmr;
+}
+
 int calc_cals(int activity, int bmr){
   if(activity == 1)
     return (int) (bmr * sedentary);
@@ -57,6 +64,18 @@ int main() {
 
   double kg = lbs/2.20462;
 
+  char y_or_n;
+  cout << "Do you know your Body Fat %? (Y/N) ";
+  cin >> y_or_n;
+
+  int bmr;
+  if(y_or_n == 'Y'){
+    int bf;
+    cout << "Body Fat %: ";
+    cin >> bf;
+    bmr = mccardle_formula(kg, bf);
+  } 
+  else{
   double inch;
   cout << "Height in inches: ";
   cin >> inch;
@@ -71,17 +90,11 @@ int main() {
   cout << "Male or Female (M/F): ";
   cin >> m_or_f;
 
-  int bmr;
   if(m_or_f == 'M')
     bmr = (int)calc_male_bmr(kg, cm, age);
   if(m_or_f == 'F')
     bmr = (int)calc_female_bmr(kg, cm, age);
-
-  // int cutOrBulk;
-  // cout << "Stay the same(0), Cut(1), or Bulk(2): ";
-  // cin >> cutOrBulk;
-
-  // cout << endl << "Your BMR is " << bmr << endl;
+  }
 
   int activity;
   cout << endl << "What would you say that your activity level is?" << endl;
@@ -95,12 +108,6 @@ int main() {
   cin >> activity;
 
   int maintanance_cals = calc_cals(activity, bmr);
-  // if(cutOrBulk == 1)
-  //   cals_burned = calc_cals(activity , bmr) - 500;
-  // else if(cutOrBulk == 2)
-  //   cals_burned = calc_cals(activity , bmr) + 500;
-  // else if(cutOrBulk == 0)
-  //   cals_burned = calc_cals(activity , bmr);
 
   cout << endl << "You maintanance calories is " << maintanance_cals << endl << endl;
 
@@ -110,7 +117,7 @@ int main() {
 
   int cal_change = 0;
   if(yesOrNo == 'Y'){
-    // cout << "How much? (+/-): ";
+
     cout << "Add or Subtract: ";
     string addOrSubtract;
     cin >> addOrSubtract;
@@ -151,5 +158,4 @@ int main() {
   carbs = carbs/4;
 
   cout << "Carbs: " << carbs << "g" << endl;
-  
 }
